@@ -1,4 +1,4 @@
-# 4156 Individual Project 1
+# 4156 Individual Project 2
 ### Xinchen Zhang (xz3052)
 
 ## Prerequisites
