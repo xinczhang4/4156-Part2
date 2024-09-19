@@ -434,6 +434,48 @@ public class RouteController {
   }
 
   /**
+   * Enroll a student for a course in the department. This method handles PATCH requests
+   * to update the enrollment count by 1 for a course according to its department code and course
+   * code. If the course exists, its enrollment number is updated. If not, a 404 error is returned.
+   *
+   * @param deptCode   the code of the department containing the course
+   * @param courseCode the code of the course to change the time for
+   * @return a ResponseEntity with either a success message and HTTP 200 status, or an error message
+   *     if the course is not found.
+   */
+  @PatchMapping(value = "/enrollStudentInCourse", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> enrollStudentInCourse(@RequestParam("deptCode") String deptCode,
+      @RequestParam("courseCode") int courseCode) {
+    try {
+      boolean doesCourseExists;
+      doesCourseExists = retrieveCourse(deptCode, courseCode).getStatusCode() == HttpStatus.OK;
+
+      if (doesCourseExists) {
+        Map<String, Department> departmentMapping;
+        departmentMapping = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
+        Map<String, Course> coursesMapping;
+        coursesMapping = departmentMapping.get(deptCode).getCourseSelection();
+
+        Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
+        boolean result = requestedCourse.enrollStudent();
+        System.out.println(result);
+        if(result){
+          return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
+        } else{
+          return new ResponseEntity<>("Course is full and student cannot be added.",
+              HttpStatus.BAD_REQUEST);
+        }
+
+      } else {
+        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+      }
+    } catch (Exception e) {
+      return handleException(e);
+    }
+  }
+
+
+  /**
    * Endpoint for changing the time of a course. This method handles PATCH requests to change the
    * time of a course identified by department code and course code.If the course exists, its time
    * is updated to the provided time.

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.InjectMocks;
@@ -80,6 +81,7 @@ public class Part2_Function {
     psyc = new Department("PSYC", courses, "Nim Tottenham", 437);
   }
 
+
   @Test
   public void retrieveCoursesSuccessTest() throws Exception {
     mockMvc.perform(get("/retrieveCourses")
@@ -102,6 +104,34 @@ public class Part2_Function {
             .param("courseCode", "0000"))
         .andExpect(status().isNotFound())
         .andExpect(content().string("No courses found with the given course code"));
+  }
+
+
+  @Test
+  public void enrollStudentInCourseSuccessTest() throws Exception {
+    mockMvc.perform(patch("/enrollStudentInCourse")
+            .param("deptCode", "PSYC")
+            .param("courseCode", "1001"))
+        .andExpect(status().isOk())
+        .andExpect(content().string("Attributed was updated successfully."));
+  }
+
+  @Test
+  public void enrollStudentInCourseFullTest() throws Exception {
+    mockMvc.perform(patch("/enrollStudentInCourse")
+            .param("deptCode", "PSYC")
+            .param("courseCode", "3445"))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().string("Course is full and student cannot be added."));
+  }
+
+  @Test
+  public void enrollStudentInCourseFailedTest() throws Exception {
+    mockMvc.perform(patch("/enrollStudentInCourse")
+            .param("deptCode", "PSYC")
+            .param("courseCode", "0000"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().string("Course Not Found"));
   }
 
 
