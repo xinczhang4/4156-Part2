@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.InjectMocks;
@@ -27,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @ContextConfiguration
 @TestMethodOrder(OrderAnnotation.class)
 @WebMvcTest(RouteController.class)
-public class Part2_Function {
+public class Part2FunctionUnitTests {
 
   @Autowired
   private MockMvc mockMvc;
@@ -87,7 +86,8 @@ public class Part2_Function {
     mockMvc.perform(get("/retrieveCourses")
             .param("courseCode", "1001"))
         .andExpect(status().isOk())
-        .andExpect(content().string(phys1001.toString().concat("\n").concat(psyc1001.toString()).concat("\n")));
+        .andExpect(content().string(
+            phys1001.toString().concat("\n").concat(psyc1001.toString()).concat("\n")));
   }
 
   @Test

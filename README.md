@@ -13,12 +13,16 @@ To run and develop this project on MacOS platform, you will need:
 ## Data Setup
 `mvn spring-boot:run -Dspring-boot.run.arguments="setup"`
 
+## Funtions Added
+1. retrieveCourses and enrollStudentInCourse in RouteController class
+2. setEnrolledStudentCount() in Course class
+
 ## Test Cases and Coverage
-Run `mvn clean test`: all test cases passed  
-Tests run: 59, Failures: 0, Errors: 0, Skipped: 0
+Run `mvn clean test`: all test cases passed
+Tests run: 67, Failures: 0, Errors: 0, Skipped: 0
 
 Run `mvn jacoco:report`: Report generated under IndividualProject/target/site/jacoco/index.html  
-Instruction Coverage: 93%, Branch coverage: 79%
+Instruction Coverage: 93%, Branch coverage: 82%
 
 ## PMD Installation and Check
 ### Installation command:  

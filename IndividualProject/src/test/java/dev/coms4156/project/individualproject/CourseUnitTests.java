@@ -51,6 +51,7 @@ public class CourseUnitTests {
     assertEquals(1, testCourse.getEnrolledStudentCount());
   }
 
+
   @Test
   @Order(4)
   public void enrollStudentWhenFullTest() {
@@ -117,6 +118,13 @@ public class CourseUnitTests {
     Course course2 = new Course("Instructor A", "Room 101", "1:10-2:25", 30);
     assertEquals(course1, course2);
     assertEquals(course1.hashCode(), course2.hashCode());
+  }
+
+  @Test
+  @Order(12)
+  public void setEnrolledStudentCountNegativeTest() {
+    boolean result = testCourse.setEnrolledStudentCount(-1);
+    assertFalse(result);
   }
 
 

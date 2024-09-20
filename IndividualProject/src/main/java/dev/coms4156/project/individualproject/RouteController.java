@@ -107,7 +107,7 @@ public class RouteController {
 
       for (Map.Entry<String, Department> deptEntry : departmentMapping.entrySet()) {
         Map<String, Course> coursesMapping = deptEntry.getValue().getCourseSelection();
-        if(coursesMapping.containsKey(Integer.toString(courseCode))){
+        if (coursesMapping.containsKey(Integer.toString(courseCode))) {
           Course course = coursesMapping.get(Integer.toString(courseCode));
           coursesInfo.append(course.toString()).append("\n");
         }
@@ -423,8 +423,13 @@ public class RouteController {
         coursesMapping = departmentMapping.get(deptCode).getCourseSelection();
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
-        requestedCourse.setEnrolledStudentCount(count);
-        return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
+        boolean result = requestedCourse.setEnrolledStudentCount(count);
+        if (result) {
+          return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
+        } else {
+          return new ResponseEntity<>("Cannot set negative value as enrollment number.",
+              HttpStatus.BAD_REQUEST);
+        }
       } else {
         return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
       }
@@ -434,9 +439,9 @@ public class RouteController {
   }
 
   /**
-   * Enroll a student for a course in the department. This method handles PATCH requests
-   * to update the enrollment count by 1 for a course according to its department code and course
-   * code. If the course exists, its enrollment number is updated. If not, a 404 error is returned.
+   * Enroll a student for a course in the department. This method handles PATCH requests to update
+   * the enrollment count by 1 for a course according to its department code and course code. If the
+   * course exists, its enrollment number is updated. If not, a 404 error is returned.
    *
    * @param deptCode   the code of the department containing the course
    * @param courseCode the code of the course to change the time for
@@ -458,10 +463,9 @@ public class RouteController {
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
         boolean result = requestedCourse.enrollStudent();
-        System.out.println(result);
-        if(result){
+        if (result) {
           return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
-        } else{
+        } else {
           return new ResponseEntity<>("Course is full and student cannot be added.",
               HttpStatus.BAD_REQUEST);
         }

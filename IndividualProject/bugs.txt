@@ -138,4 +138,9 @@ Location: RouteController.java line44,line47
 Description: When doing a String.toLowerCase()/toUpperCase() call, use a Locale
 Resolution: Use toString(Locale.ROOT) to ensure consistent behavior across different environments
 
+Bug26:
+Location: Course.java, method setEnrolledStudentCount()
+Description: Setting enrolled student count as negative number returns no error log.
+Resolution: Print error log when setting enrolled student to negative number.
+
 
