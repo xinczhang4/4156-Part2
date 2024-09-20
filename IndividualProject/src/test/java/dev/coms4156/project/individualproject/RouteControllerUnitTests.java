@@ -311,6 +311,18 @@ public class RouteControllerUnitTests {
   }
 
   @Test
+  @Order(3)
+  public void setNegativeEnrollmentCountTest() throws Exception {
+    mockMvc.perform(patch("/setEnrollmentCount")
+            .param("deptCode", "PSYC")
+            .param("courseCode", "1001")
+            .param("count", "-10"))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().string("Cannot set negative value as enrollment number."));
+  }
+
+
+  @Test
   public void setEnrollmentCountNotFoundTest() throws Exception {
     mockMvc.perform(patch("/setEnrollmentCount")
             .param("deptCode", "PSYC")
