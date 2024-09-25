@@ -343,17 +343,6 @@ public class RouteControllerUnitTests {
   }
 
   @Test
-  @Order(4)
-  public void setEnrollmentCountBack() throws Exception {
-    mockMvc.perform(patch("/setEnrollmentCount")
-            .param("deptCode", "PSYC")
-            .param("courseCode", "1001")
-            .param("count", "191"))
-        .andExpect(status().isOk())
-        .andExpect(content().string("Attributed was updated successfully."));
-  }
-
-  @Test
   public void changeCourseTimeTest() throws Exception {
     mockMvc.perform(patch("/changeCourseTime")
             .param("deptCode", "PSYC")
@@ -361,6 +350,16 @@ public class RouteControllerUnitTests {
             .param("time", "1:10-2:25"))
         .andExpect(status().isOk())
         .andExpect(content().string("Attributed was updated successfully."));
+  }
+
+  @Test
+  public void changeCourseTimeNotFoundTest() throws Exception {
+    mockMvc.perform(patch("/changeCourseTime")
+            .param("deptCode", "PSYC")
+            .param("courseCode", "0000")
+            .param("time", "1:10-2:25"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().string("Course Not Found"));
   }
 
   @Test
@@ -374,6 +373,16 @@ public class RouteControllerUnitTests {
   }
 
   @Test
+  public void changeCourseTeacherNotFoundTest() throws Exception {
+    mockMvc.perform(patch("/changeCourseTeacher")
+            .param("deptCode", "PSYC")
+            .param("courseCode", "0000")
+            .param("teacher", "Patricia G Lindemann"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().string("Course Not Found"));
+  }
+
+  @Test
   public void changeCourseLocationTest() throws Exception {
     mockMvc.perform(patch("/changeCourseLocation")
             .param("deptCode", "PSYC")
@@ -381,6 +390,16 @@ public class RouteControllerUnitTests {
             .param("location", "501 SCH"))
         .andExpect(status().isOk())
         .andExpect(content().string("Attributed was updated successfully."));
+  }
+
+  @Test
+  public void changeCourseLocationNotFoundTest() throws Exception {
+    mockMvc.perform(patch("/changeCourseLocation")
+            .param("deptCode", "PSYC")
+            .param("courseCode", "0000")
+            .param("location", "501 SCH"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().string("Course Not Found"));
   }
 
   private static Department psyc;
