@@ -392,6 +392,16 @@ public class RouteControllerUnitTests {
         .andExpect(content().string("Attributed was updated successfully."));
   }
 
+  @Test
+  public void changeCourseLocationNotFoundTest() throws Exception {
+    mockMvc.perform(patch("/changeCourseLocation")
+            .param("deptCode", "PSYC")
+            .param("courseCode", "0000")
+            .param("location", "501 SCH"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().string("Course Not Found"));
+  }
+
   private static Department psyc;
   private static Course psyc1001;
 
