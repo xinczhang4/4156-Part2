@@ -19,7 +19,7 @@ To run and develop this project on MacOS platform, you will need:
 
 ## Test Cases and Coverage
 Run `mvn clean test`: all test cases passed
-Tests run: 67, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 69, Failures: 0, Errors: 0, Skipped: 0
 
 Run `mvn jacoco:report`: Report generated under IndividualProject/target/site/jacoco/index.html  
 Instruction Coverage: 93%, Branch coverage: 82%
@@ -32,7 +32,7 @@ Instruction Coverage: 93%, Branch coverage: 82%
 `$ alias pmd="$HOME/pmd-bin-7.5.0/bin/pmd"`  
 ### Check command:   
 `cd IndividualProject`  
-`pmd check -d src -R rulesets/java/quickstart.xml -f text `
+`pmd check -d src -R rulesets/java/quickstart.xml -f text -r pmd.txt`
 ### Bug Report Location
 `IndividualProject/bugs.txt`
 ## CodeStyle Check
